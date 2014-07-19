@@ -1,9 +1,9 @@
-var Traverse = require("../lib/traverse");
+var Funmix = require("..");
 var esprima = require("esprima");
 var escodegen = require('escodegen');
 
 var assert = require("power-assert");
-describe('Traverse', function(){
+describe('Funmix', function(){
   describe('#replace()', function(){
     it('insert function', function(){
       var src = " function abc() { var test = function(){console.log('hello');}; test();} abc();";
@@ -12,16 +12,16 @@ describe('Traverse', function(){
       expected = escodegen.generate(esprima.parse(expected));
       var enter = "console.time('${name}');";
       var leave = "console.timeEnd('${name}');";
-      var traverse = new Traverse(src);
-      traverse.setStartFunc(enter);
-      traverse.setEndFunc(leave);
-      var code = traverse.generate();
+      var funmix = new Funmix(src);
+      funmix.setStartFunc(enter);
+      funmix.setEndFunc(leave);
+      var code = funmix.generate();
       assert(expected == code);
     });
   });
 });
 
-describe('Traverse', function(){
+describe('Funmix', function(){
   describe('#replace()', function(){
     it('immediate function', function(){
       var src = "(function() { var test = function(){console.log('hello');}; test();}());";
@@ -32,12 +32,12 @@ describe('Traverse', function(){
       var endPrg = "console.log('finish');";
       var enter = "console.time('${name}');";
       var leave = "console.timeEnd('${name}');";
-      var traverse = new Traverse(src);
-      traverse.setStartProgram(startPrg);
-      traverse.setStartFunc(enter);
-      traverse.setEndFunc(leave);
-      traverse.setEndProgram(endPrg);
-      var code = traverse.generate();
+      var funmix = new Funmix(src);
+      funmix.setStartProgram(startPrg);
+      funmix.setStartFunc(enter);
+      funmix.setEndFunc(leave);
+      funmix.setEndProgram(endPrg);
+      var code = funmix.generate();
       assert(expected == code);
     });
   });

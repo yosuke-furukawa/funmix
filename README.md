@@ -7,7 +7,7 @@ Example
 ========================
 
 ```javascript
-var Traverse = require("funmix");
+var Funmix = require("funmix");
 
 var src = " function abc() { var test = function(){console.log('hello');}; test();} abc();";
 
@@ -22,17 +22,16 @@ function abc() {
 abc();
 */ 
 
-expected = escodegen.generate(esprima.parse(expected));
 var startPrg = "console.log('begin');";
 var endPrg = "console.log('finish');";
 var enter = "console.time('${name}');";
 var leave = "console.timeEnd('${name}');";
-var traverse = new Traverse(src);
-traverse.setStartProgram(startPrg);
-traverse.setEndProgram(endPrg);
-traverse.setStartFunc(enter);
-traverse.setEndFunc(leave);
-var code = traverse.generate();
+var funmix = new Funmix(src);
+funmix.setStartProgram(startPrg);
+funmix.setEndProgram(endPrg);
+funmix.setStartFunc(enter);
+funmix.setEndFunc(leave);
+var code = funmix.generate();
 
 /*
 AFTER

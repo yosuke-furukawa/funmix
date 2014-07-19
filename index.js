@@ -1,1 +1,1 @@
-module.exports = require("./lib/traverse");
+module.exports = require("./lib/funmix");
