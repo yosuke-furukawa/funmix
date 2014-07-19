@@ -1,6 +1,6 @@
 {
   "name": "funmix",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Inject javascript sentences in function",
   "main": "index.js",
   "scripts": {
