@@ -1,4 +1,4 @@
-FunMix
+FunMix [![Build Status](https://travis-ci.org/yosuke-furukawa/funmix.svg?branch=master)](https://travis-ci.org/yosuke-furukawa/funmix)
 ========================
 
 FunMix can insert sentences the beginning and the end of each function.
