@@ -24,21 +24,23 @@ describe('Funmix', function(){
 describe('Funmix', function(){
   describe('#replace()', function(){
     it('immediate function', function(){
-      var src = "(function() { var test = function(){console.log('hello');}; test();}());";
-      var expected = "console.log('begin');(function() { console.time('no name function'); var test = function(){console.time('test'); console.log('hello'); console.timeEnd('test');}; test(); console.timeEnd('no name function');}());console.log('finish');";
+      var src = "(function() { var test = function(){console.log('hello');}; test(); return 'abc';}());";
+      var expected = "function timeEndFunc(name, args){console.timeEnd(name); return args;}\n\n\n(function() { console.time('no name function'); var test = function(){console.time('test'); console.log('hello');  console.timeEnd('test');}; test(); return timeEndFunc('test', 'abc');console.timeEnd('no name function');}());console.log('finish');";
 
       expected = escodegen.generate(esprima.parse(expected));
-      var startPrg = "console.log('begin');";
+      var startPrg = "function timeEndFunc(name, args){console.timeEnd(name); return args;}";
       var endPrg = "console.log('finish');";
       var enter = "console.time('${name}');";
       var leave = "console.timeEnd('${name}');";
+      var returnStmt = "timeEndFunc('${name}', ${arg});";
       var funmix = new Funmix(src);
       funmix.setStartProgram(startPrg);
       funmix.setStartFunc(enter);
       funmix.setEndFunc(leave);
       funmix.setEndProgram(endPrg);
+      funmix.setReturnStmt(returnStmt);
       var code = funmix.generate();
-      assert(expected == code);
+      assert(expected, code);
     });
   });
 });
