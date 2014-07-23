@@ -8,8 +8,8 @@ var path = require('path');
 describe('Funmix', function(){
   describe('#replace()', function(){
     it('return', function(){
-      var src = fs.readFileSync(path.join(__dirname, "fibonacci.js"));
-      var expected = fs.readFileSync(path.join(__dirname, "expected_fibonacci.js"));
+      var src = fs.readFileSync(path.join(__dirname, "..", "fixtures", "fibonacci.js"));
+      var expected = fs.readFileSync(path.join(__dirname, "..", "fixtures", "expected_fibonacci.js"));
       expected = escodegen.generate(esprima.parse(expected));
       var startPrg = "function timeEndFunc(name, args){console.timeEnd(name); return args;}";
       var endPrg = "console.log('finish');";
